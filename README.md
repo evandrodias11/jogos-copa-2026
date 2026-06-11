@@ -28,13 +28,29 @@ Abra `http://localhost:5173`.
 
 ## API usada
 
-O servidor local consulta:
+O servidor local e a Netlify Function consultam:
 
 ```txt
 GET https://api.football-data.org/v4/competitions/WC/matches?season=2026
 ```
 
-O token fica apenas no backend local em `server/index.js`, enviado no header `X-Auth-Token`.
+O token fica apenas no backend local ou no ambiente do Netlify, enviado no header `X-Auth-Token`.
+
+## Deploy no Netlify
+
+O deploy usa `netlify.toml` para publicar `dist` e redirecionar:
+
+```txt
+/api/world-cup-fixtures -> /.netlify/functions/world-cup-fixtures
+```
+
+No painel do Netlify, cadastre a variável:
+
+```txt
+FOOTBALL_DATA_TOKEN=seu_token_do_football_data
+```
+
+Marque como variável secreta/sensível se a opção aparecer. Não envie o arquivo `.env` para o repositório.
 
 ## Recursos
 
