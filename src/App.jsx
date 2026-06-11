@@ -46,6 +46,19 @@ const stageLabels = {
   FINAL: 'Final',
 }
 
+const statusLabels = {
+  TIMED: 'Agendado',
+  SCHEDULED: 'Agendado',
+  IN_PLAY: 'Ao vivo',
+  LIVE: 'Ao vivo',
+  PAUSED: 'Intervalo',
+  FINISHED: 'Encerrado',
+  POSTPONED: 'Adiado',
+  SUSPENDED: 'Suspenso',
+  CANCELLED: 'Cancelado',
+  AWARDED: 'Resultado atribuído',
+}
+
 const countryNamePtBrByTla = {
   ALG: 'Argélia',
   ARG: 'Argentina',
@@ -213,6 +226,19 @@ function getWinnerSide(fixture) {
   return null
 }
 
+function getStatusTone(status) {
+  if (['IN_PLAY', 'LIVE'].includes(status)) return 'live'
+  if (status === 'PAUSED') return 'paused'
+  if (status === 'FINISHED') return 'finished'
+  if (['POSTPONED', 'SUSPENDED', 'CANCELLED'].includes(status)) return 'warning'
+
+  return 'scheduled'
+}
+
+function getStatusLabel(status) {
+  return statusLabels[status] ?? 'Status indisponível'
+}
+
 function hasTeamMatch(fixture, query) {
   if (!query) return true
 
@@ -277,7 +303,12 @@ function FixtureCard({ fixture }) {
       </div>
 
       <div className="fixture-main">
-        <div className="fixture-round">{translateRound(fixture.round)}</div>
+        <div className="fixture-header">
+          <div className="fixture-round">{translateRound(fixture.round)}</div>
+          <span className={`status-pill status-${getStatusTone(fixture.status)}`}>
+            {getStatusLabel(fixture.status)}
+          </span>
+        </div>
         <div className="teams-row">
           <TeamBadge
             team={fixture.home}
