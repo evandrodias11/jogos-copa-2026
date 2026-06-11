@@ -15,7 +15,7 @@ function jsonResponse(statusCode, body, headers = {}) {
   }
 }
 
-export async function getWorldCupFixturesResponse() {
+export async function getWorldCupFixturesResponse({ forceRefresh = false } = {}) {
   const apiToken = process.env.FOOTBALL_DATA_TOKEN
   const cacheMs = Number(process.env.API_CACHE_MS ?? defaultCacheMs)
 
@@ -26,7 +26,7 @@ export async function getWorldCupFixturesResponse() {
     })
   }
 
-  if (fixturesCache && Date.now() - fixturesCache.createdAt < cacheMs) {
+  if (!forceRefresh && fixturesCache && Date.now() - fixturesCache.createdAt < cacheMs) {
     return jsonResponse(200, fixturesCache.payload, { 'x-cache': 'HIT' })
   }
 

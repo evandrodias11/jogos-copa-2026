@@ -347,7 +347,7 @@ function App() {
     setError('')
 
     try {
-      const data = await fetchWorldCupFixtures()
+      const data = await fetchWorldCupFixtures({ forceRefresh: !silent })
       setFixtures(data.matches.map(normalizeFixture).sort(sortByDate))
       setCurrentTime(Date.now())
     } catch (requestError) {

@@ -1,5 +1,8 @@
-export async function fetchWorldCupFixtures() {
-  const response = await fetch('/api/world-cup-fixtures')
+export async function fetchWorldCupFixtures({ forceRefresh = false } = {}) {
+  const url = forceRefresh
+    ? '/api/world-cup-fixtures?refresh=1'
+    : '/api/world-cup-fixtures'
+  const response = await fetch(url)
   const data = await response.json().catch(() => ({}))
 
   if (!response.ok) {

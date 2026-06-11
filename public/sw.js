@@ -32,7 +32,20 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return
 
   if (requestUrl.pathname.startsWith('/api/')) {
-    event.respondWith(fetch(request))
+    event.respondWith(
+      fetch(request).catch(
+        () =>
+          new Response(
+            JSON.stringify({
+              message: 'Não foi possível conectar à API. Tente novamente em instantes.',
+            }),
+            {
+              status: 503,
+              headers: { 'Content-Type': 'application/json' },
+            },
+          ),
+      ),
+    )
     return
   }
 

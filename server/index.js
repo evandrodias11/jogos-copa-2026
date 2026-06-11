@@ -10,8 +10,10 @@ const port = Number(process.env.PORT ?? 5173)
 
 const app = express()
 
-app.get('/api/world-cup-fixtures', async (_request, response) => {
-  const result = await getWorldCupFixturesResponse()
+app.get('/api/world-cup-fixtures', async (request, response) => {
+  const result = await getWorldCupFixturesResponse({
+    forceRefresh: request.query.refresh === '1',
+  })
 
   for (const [key, value] of Object.entries(result.headers)) {
     response.setHeader(key, value)
