@@ -60,3 +60,11 @@ Marque como variável secreta/sensível se a opção aparecer. Não envie o arqu
 - Filtro por seleção, estádio ou fase.
 - Filtro por fase/rodada da competição.
 - Cache local simples para reduzir chamadas repetidas à API.
+- PWA instalável pelo navegador do celular.
+
+## Instalar no celular
+
+Depois do deploy, abra a URL no navegador do celular.
+
+- Android/Chrome: use a opção `Instalar app` ou `Adicionar à tela inicial`.
+- iPhone/Safari: use `Compartilhar > Adicionar à Tela de Início`.
